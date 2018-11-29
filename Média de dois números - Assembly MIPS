@@ -1,0 +1,59 @@
+# Calculo da média de dois números
+
+# int main() {
+#   int num, num2, media;
+#   Console.WriteLine("Digite um número:");
+#   num = int.Parse(Console.ReadLine());
+#	  Console.WriteLine("Digite um outro número:");
+#	  num2 = int.Parse(Console.ReadLine());
+#	  media = (num + num2)/2;
+#	  Console.WriteLine("A média é "+ media);
+#	  Console.ReadKey();
+# }
+
+.data
+
+mensagem1:	.asciiz "Digite um numero\n"
+mensagem2:	.asciiz "Digite um outro numero"
+numero: 	.word 1
+numero2: 	.word 1
+soma:		.word 1
+		
+	.text
+	# imprime mensagem1
+main:	li $v0, 4 
+	la $a0, mensagem
+	syscall
+
+	# lê numero
+	li $v0, 5 
+	syscall
+
+	# imprime mensagem2
+	li $v1, 4 
+	la $a1, mensagem2
+	syscall
+
+	# lê numero2
+	li $v1, 5 
+	syscall
+			
+	# grava os numeros na memória	
+	sw $v0, numero
+	sw $v1, numero2
+			
+	# soma os dois numeros
+	add $t0, $v0, $v1
+
+	# grava soma
+	sw $t0, soma
+
+	#calcula media
+	divi $t1, $t0, 2
+			
+	# imprime media
+	li $v0, 1
+	move $a0, $t1
+	syscall
+
+	jr $ra
